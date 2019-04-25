@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.palette.graphics.Palette
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_home.*
+import me.haowen.library.adapter.BannerPagerAdapter
 import me.haowen.library.imageloader.ImageLoaderInterface
 import me.haowen.library.util.SizeUtil
 
@@ -104,6 +106,13 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
+            }
+        })
+
+        // Item点击事件
+        bannerView.setOnItemClickListener(object : BannerPagerAdapter.OnItemClickedListener {
+            override fun onItemClicked(position: Int) {
+                Toast.makeText(this@HomeActivity, position.toString(), Toast.LENGTH_SHORT).show()
             }
         })
     }

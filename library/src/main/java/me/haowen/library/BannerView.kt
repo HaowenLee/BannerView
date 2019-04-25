@@ -103,4 +103,8 @@ class BannerView : FrameLayout {
         }
         return super.dispatchTouchEvent(ev)
     }
+
+    fun setOnItemClickListener(listener: BannerPagerAdapter.OnItemClickedListener) {
+        mAdapter.onItemClickedListener = listener
+    }
 }

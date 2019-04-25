@@ -33,9 +33,13 @@ class BannerPagerAdapter(private val mContext: Context) : PagerAdapter() {
             contentView = mViewCache.removeFirst()
             viewHolder = contentView.getTag(R.string.holder_tag) as ViewHolder
         }
+        val realIndex = position % data.size
         viewHolder.imageView.apply {
             scaleType = ImageView.ScaleType.CENTER_CROP
-            imageLoader?.displayImage(mContext, data[position % data.size], this)
+            imageLoader?.displayImage(mContext, data[realIndex], this)
+            setOnClickListener {
+                onItemClickedListener?.onItemClicked(realIndex)
+            }
         }
         container.addView(contentView)
         return contentView
@@ -59,5 +63,16 @@ class BannerPagerAdapter(private val mContext: Context) : PagerAdapter() {
 
     class ViewHolder {
         lateinit var imageView: ImageView
+    }
+
+    var onItemClickedListener: OnItemClickedListener? = null
+
+    interface OnItemClickedListener {
+        /**
+         * Item clicked
+         *
+         * @param position position
+         */
+        fun onItemClicked(position: Int)
     }
 }
