@@ -13,8 +13,13 @@ import me.haowen.library.view.BannerViewPager
 
 class BannerView : FrameLayout {
 
+    private val mScroller by lazy { BannerScroller(context) }
     var delayTime = 5000L
     var duration: Int = 300
+        set(value) {
+            field = value
+            mScroller.duration = duration
+        }
     var isAutoPlay: Boolean = true
 
     val viewPager: BannerViewPager by lazy { BannerViewPager(context) }
@@ -27,10 +32,7 @@ class BannerView : FrameLayout {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes) {
         mAdapter = BannerPagerAdapter(context)
-
         // Set ViewPager Scroller duration.
-        val mScroller = BannerScroller(context)
-        mScroller.duration = duration
         mScroller.initViewPagerScroll(viewPager)
 
         viewPager.apply {

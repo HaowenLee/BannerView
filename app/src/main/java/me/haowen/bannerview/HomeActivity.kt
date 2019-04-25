@@ -22,6 +22,8 @@ import me.haowen.library.util.SizeUtil
 class HomeActivity : AppCompatActivity() {
 
     private val mainColors = arrayListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    private var firstColor = true
+    private var pageState: Int = ViewPager.SCROLL_STATE_IDLE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +53,16 @@ class HomeActivity : AppCompatActivity() {
                             isFirstResource: Boolean
                         ): Boolean {
                             // 没颜色
-                            if (mainColors[bannerView.imageList.indexOf(path)] == 0) {
+                            val position = bannerView.imageList.indexOf(path)
+                            if (mainColors[position] == 0) {
                                 val mainColor = generateColor(resource)
-                                mainColors[bannerView.imageList.indexOf(path)] = mainColor
+                                mainColors[position] = mainColor
+                                // IDLE状态的，并且页码相同,第一次
+                                println(bannerView.viewPager.currentItem % mainColors.size)
+                                if (firstColor && pageState == ViewPager.SCROLL_STATE_IDLE && position == bannerView.viewPager.currentItem % mainColors.size) {
+                                    ivBannerBg.setBackgroundColor(mainColor)
+                                    firstColor = false
+                                }
                             }
                             return false
                         }
@@ -80,6 +89,7 @@ class HomeActivity : AppCompatActivity() {
         bannerView.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
+                pageState = state
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
