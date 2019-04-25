@@ -53,8 +53,14 @@ class BannerView : FrameLayout {
     var imageList: MutableList<String> = ArrayList()
         set(value) {
             field = value
-            mAdapter.data = imageList
-            viewPager.setCurrentItem(Integer.MAX_VALUE / 2, false)
+            if (value.size == 0) {
+                return
+            }
+            mAdapter.data = value
+            // 中间位置
+            val middleIndex = Integer.MAX_VALUE / 2
+            middleIndex % imageList.size
+            viewPager.setCurrentItem(middleIndex - middleIndex % imageList.size, false)
             if (isAutoPlay) {
                 startAutoPlay()
             }
