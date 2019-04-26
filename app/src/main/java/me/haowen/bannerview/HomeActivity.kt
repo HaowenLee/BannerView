@@ -115,6 +115,8 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this@HomeActivity, position.toString(), Toast.LENGTH_SHORT).show()
             }
         })
+
+        indicatorLayout.setUpWithViewPager(bannerView.viewPager, mainColors.size)
     }
 
     /**

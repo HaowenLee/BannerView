@@ -26,6 +26,28 @@
             android:layout_marginTop="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+        <me.haowen.library.view.IndicatorLayout
+                android:id="@+id/indicatorLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                app:indicatorDrawable="@drawable/bg_viewpager_indicator_point_selected"
+                app:indicatorSize="5dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_indicator_layout"
+                app:indicatorSpace="10dp"
+                app:itemCount="2"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                app:normalDrawable="@drawable/bg_viewpager_indicator_point_unselected"
+                app:normalSize="5dp"
+                tools:layout_height="5dp"
+                tools:layout_width="30dp"/>
+
+    </me.haowen.library.BannerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

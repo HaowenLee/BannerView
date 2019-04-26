@@ -47,7 +47,7 @@ class BannerView : FrameLayout {
             adapter = mAdapter
         }
 
-        addView(viewPager)
+        addView(viewPager, 0)
     }
 
     var imageList: MutableList<String> = ArrayList()

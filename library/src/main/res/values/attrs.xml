@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ViewPager的指示器 -->
+    <declare-styleable name="IndicatorLayout">
+        <!-- 指示器的个数 -->
+        <attr name="itemCount" format="integer"/>
+        <attr name="normalDrawable" format="reference"/>
+        <attr name="normalSize" format="dimension"/>
+        <attr name="indicatorDrawable" format="reference"/>
+        <attr name="indicatorSize" format="dimension"/>
+        <attr name="indicatorSpace" format="dimension"/>
+    </declare-styleable>
+</resources>
