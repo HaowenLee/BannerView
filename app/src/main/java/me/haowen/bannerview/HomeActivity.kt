@@ -17,7 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_home.*
-import me.haowen.library.imageloader.ImageLoaderInterface
+import me.haowen.library.imageloader.ImageLoader
 import me.haowen.library.util.SizeUtil
 
 class HomeActivity : AppCompatActivity() {
@@ -32,8 +32,9 @@ class HomeActivity : AppCompatActivity() {
 
         bannerView.duration = 300
 
-        bannerView.imageLoader = object : ImageLoaderInterface {
-            override fun displayImage(context: Context, path: Any, imageView: ImageView) {
+        bannerView.imageLoader = object : ImageLoader() {
+
+            override fun displayImage(context: Context, path: Any, imageView: ImageView, position: Int) {
                 Glide.with(context)
                     .asBitmap()
                     .load(path)
@@ -56,7 +57,6 @@ class HomeActivity : AppCompatActivity() {
                             isFirstResource: Boolean
                         ): Boolean {
                             // 没颜色
-                            val position = bannerView.imageList.indexOf(path)
                             if (mainColors[position] == 0) {
                                 val mainColor = generateColor(resource)
                                 mainColors[position] = mainColor
@@ -167,18 +167,13 @@ class HomeActivity : AppCompatActivity() {
         } else defaultColor
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        bannerView.releaseBanner()
-    }
-
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         bannerView.startAutoPlay()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         bannerView.stopAutoPlay()
     }
 }
