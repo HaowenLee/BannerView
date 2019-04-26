@@ -17,8 +17,8 @@ class BannerPagerAdapter(private val mContext: Context) : PagerAdapter() {
 
     private val mViewCache: LinkedList<View> = LinkedList()
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view == `object`
+    override fun isViewFromObject(view: View, any: Any): Boolean {
+        return view == any
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -38,7 +38,7 @@ class BannerPagerAdapter(private val mContext: Context) : PagerAdapter() {
             scaleType = ImageView.ScaleType.CENTER_CROP
             imageLoader?.displayImage(mContext, data[realIndex], this)
             setOnClickListener {
-                onItemClickedListener?.onItemClicked(realIndex)
+                onItemClickedListener?.invoke(realIndex)
             }
         }
         container.addView(contentView)
@@ -65,14 +65,5 @@ class BannerPagerAdapter(private val mContext: Context) : PagerAdapter() {
         lateinit var imageView: ImageView
     }
 
-    var onItemClickedListener: OnItemClickedListener? = null
-
-    interface OnItemClickedListener {
-        /**
-         * Item clicked
-         *
-         * @param position position
-         */
-        fun onItemClicked(position: Int)
-    }
+    var onItemClickedListener: ((Int) -> Unit)? = null
 }

@@ -18,15 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-    <me.haowen.library.BannerView
-            android:id="@+id/bannerView"
-            android:layout_width="match_parent"
-            android:layout_height="132dp"
-            tools:background="#30FFFF00"
-            android:layout_marginTop="30dp"
+    <FrameLayout
+            android:layout_width="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content">
+
+        <me.haowen.library.view.BannerViewPager
+                android:id="@+id/bannerView"
+                android:layout_width="match_parent"
+                android:layout_height="132dp"
+                tools:background="#30FFFF00"
+                android:layout_marginTop="30dp"/>
 
         <me.haowen.library.view.IndicatorLayout
                 android:id="@+id/indicatorLayout"
@@ -48,6 +52,6 @@
                 tools:layout_height="5dp"
                 tools:layout_width="30dp"/>
 
-    </me.haowen.library.BannerView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
