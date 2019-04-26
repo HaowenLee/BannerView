@@ -1,6 +1,6 @@
 # BannerView
 
-![Release](https://jitpack.io/v/HaowenLee/BannerView.svg)
+[![](https://jitpack.io/v/HaowenLee/BannerView.svg)(https://jitpack.io/#HaowenLee/BannerView)
 
 好用又好看的轮播图控件
 
