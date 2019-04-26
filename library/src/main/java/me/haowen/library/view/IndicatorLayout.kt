@@ -22,7 +22,6 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     private var itemCount: Int = 0
     private var normalDrawable: Drawable? = null
     private var indicatorDrawable: Drawable? = null
-    private var normalSize: Int = 0
     private var indicatorSize: Int = 0
     private var indicatorSpace: Int = 0
     /**
@@ -38,8 +37,6 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.IndicatorLayout, 0, 0)
         if (!isInEditMode) {
             itemCount = typedArray.getInteger(R.styleable.IndicatorLayout_itemCount, 0)
-            normalSize =
-                typedArray.getDimension(R.styleable.IndicatorLayout_normalSize, SizeUtil.dp2px(10f).toFloat()).toInt()
             normalDrawable = typedArray.getDrawable(R.styleable.IndicatorLayout_normalDrawable)
             indicatorSize =
                 typedArray.getDimension(R.styleable.IndicatorLayout_indicatorSize, SizeUtil.dp2px(10f).toFloat())
@@ -52,7 +49,6 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         typedArray.recycle()
 
         // 保证精度
-        normalSize = normalSize / 2 * 2
         indicatorSize = indicatorSize / 2 * 2
         indicatorSpace = indicatorSpace / 2 * 2
     }
@@ -139,11 +135,11 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             )
 
             // 为小圆点左右添加间距
-            params.leftMargin = (indicatorSpace - normalSize) / 2
-            params.rightMargin = (indicatorSpace - normalSize) / 2
+            params.leftMargin = (indicatorSpace - indicatorSize) / 2
+            params.rightMargin = (indicatorSpace - indicatorSize) / 2
             // 手动给小圆点一个大小
-            params.height = normalSize
-            params.width = normalSize
+            params.height = indicatorSize
+            params.width = indicatorSize
 
             normalView.setImageDrawable(normalDrawable)
             // 为LinearLayout添加ImageView
