@@ -32,7 +32,14 @@ dependencies {
 
 ```
 
-#### 步骤 3. 在布局文件中添加BannerViewPager和IndicatorLayout，可以设置自定义属性
+#### 步骤 3. 在布局文件中添加BannerView 或者 BannerViewPager和IndicatorLayout，可以设置自定义属性
+
+```
+<me.haowen.library.BannerView
+    android:id="@+id/bannerView"
+    android:layout_width="match_parent"
+    android:layout_height="132dp">
+```
 
 ```
 <me.haowen.library.view.BannerViewPager
