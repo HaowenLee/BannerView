@@ -4,9 +4,8 @@
     <declare-styleable name="IndicatorLayout">
         <!-- 指示器的个数 -->
         <attr name="itemCount" format="integer"/>
-        <attr name="normalDrawable" format="reference"/>
-        <attr name="normalSize" format="dimension"/>
-        <attr name="indicatorDrawable" format="reference"/>
+        <attr name="unselectedDrawable" format="reference"/>
+        <attr name="selectedDrawable" format="reference"/>
         <attr name="indicatorSize" format="dimension"/>
         <attr name="indicatorSpace" format="dimension"/>
     </declare-styleable>

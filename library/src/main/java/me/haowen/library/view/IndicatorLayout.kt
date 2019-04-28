@@ -1,7 +1,6 @@
 package me.haowen.library.view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
@@ -20,14 +19,22 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
      * 指示器数量
      */
     private var itemCount: Int = 0
-    private var normalDrawable: Drawable? = null
-    private var indicatorDrawable: Drawable? = null
     private var indicatorSize: Int = 0
     private var indicatorSpace: Int = 0
     /**
      * 指示点的View
      */
     private var indicationPointView: ImageView? = null
+
+    /**
+     * 未选中的指示器图
+     */
+    var unselectedDrawable: Drawable? = null
+
+    /**
+     * 选中时的指示器图
+     */
+    var selectedDrawable: Drawable? = null
 
     init {
         initAttrs(context, attrs)
@@ -37,11 +44,11 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.IndicatorLayout, 0, 0)
         if (!isInEditMode) {
             itemCount = typedArray.getInteger(R.styleable.IndicatorLayout_itemCount, 0)
-            normalDrawable = typedArray.getDrawable(R.styleable.IndicatorLayout_normalDrawable)
+            unselectedDrawable = typedArray.getDrawable(R.styleable.IndicatorLayout_unselectedDrawable)
             indicatorSize =
-                typedArray.getDimension(R.styleable.IndicatorLayout_indicatorSize, SizeUtil.dp2px(10f).toFloat())
+                typedArray.getDimension(R.styleable.IndicatorLayout_indicatorSize, SizeUtil.dp2px(5f).toFloat())
                     .toInt()
-            indicatorDrawable = typedArray.getDrawable(R.styleable.IndicatorLayout_indicatorDrawable)
+            selectedDrawable = typedArray.getDrawable(R.styleable.IndicatorLayout_selectedDrawable)
             indicatorSpace =
                 typedArray.getDimension(R.styleable.IndicatorLayout_indicatorSpace, SizeUtil.dp2px(10f).toFloat())
                     .toInt()
@@ -59,7 +66,6 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
      * @param viewPager ViewPager
      */
     fun setUpWithViewPager(viewPager: ViewPager, itemCount: Int) {
-        removeAllViews()
         this.itemCount = itemCount
         initView(context)
 
@@ -79,6 +85,8 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     private fun initView(context: Context) {
+        removeAllViews()
+
         if (itemCount <= 0) {
             return
         }
@@ -109,7 +117,7 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         params.height = indicatorSize
         params.width = indicatorSize
 
-        indicationPointView!!.setImageDrawable(indicatorDrawable)
+        indicationPointView!!.setImageDrawable(selectedDrawable)
 
         addView(indicationPointView, params)
     }
@@ -141,7 +149,7 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             params.height = indicatorSize
             params.width = indicatorSize
 
-            normalView.setImageDrawable(normalDrawable)
+            normalView.setImageDrawable(unselectedDrawable)
             // 为LinearLayout添加ImageView
             linearLayout.addView(normalView, params)
         }

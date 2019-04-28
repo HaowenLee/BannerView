@@ -30,9 +30,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        bannerView.duration = 300
+        bannerViewPager.duration = 300
 
-        bannerView.imageLoader = object : ImageLoader() {
+        bannerViewPager.imageLoader = object : ImageLoader() {
 
             override fun displayImage(context: Context, path: Any, imageView: ImageView, position: Int) {
                 Glide.with(context)
@@ -61,8 +61,8 @@ class HomeActivity : AppCompatActivity() {
                                 val mainColor = generateColor(resource)
                                 mainColors[position] = mainColor
                                 // IDLE状态的，并且页码相同,第一次
-                                println(bannerView.currentItem % mainColors.size)
-                                if (firstColor && pageState == ViewPager.SCROLL_STATE_IDLE && position == bannerView.currentItem % mainColors.size) {
+                                println(bannerViewPager.currentItem % mainColors.size)
+                                if (firstColor && pageState == ViewPager.SCROLL_STATE_IDLE && position == bannerViewPager.currentItem % mainColors.size) {
                                     ivBannerBg.setBackgroundColor(mainColor)
                                     firstColor = false
                                 }
@@ -74,7 +74,7 @@ class HomeActivity : AppCompatActivity() {
                     .into(imageView)
             }
         }
-        bannerView.imageList = arrayListOf(
+        bannerViewPager.imageList = arrayListOf(
             "https://imagev2.xmcdn.com/group58/M02/BD/56/wKgLc1y1gE6jeL2aAAIZXzsRjZ4383.jpg",
             "https://imagev2.xmcdn.com/group59/M09/03/98/wKgLeFysXxnShqkvAAIXR3-sGDI402.jpg",
             "https://imagev2.xmcdn.com/group56/M08/70/24/wKgLgFyTBbnTuBaZAAIlw2Q811M585.jpg",
@@ -89,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
 
         val argbEvaluator = ArgbEvaluator()
 
-        bannerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        bannerViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
                 pageState = state
@@ -111,11 +111,39 @@ class HomeActivity : AppCompatActivity() {
         })
 
         // Item点击事件
-        bannerView.setOnItemClickedListener { position ->
+        bannerViewPager.setOnItemClickedListener { position ->
             Toast.makeText(this@HomeActivity, position.toString(), Toast.LENGTH_SHORT).show()
         }
 
-        indicatorLayout.setUpWithViewPager(bannerView, mainColors.size)
+        indicatorLayout.setUpWithViewPager(bannerViewPager, mainColors.size)
+
+        initBannerView()
+    }
+
+    /**
+     * 组合后的BannerView（可自定义性低）
+     */
+    private fun initBannerView() {
+        bannerView.imageLoader = object : ImageLoader() {
+            override fun displayImage(context: Context, path: Any, imageView: ImageView, position: Int) {
+                Glide.with(context)
+                    .load(path)
+                    .transform(CenterCrop(), RoundedCorners(SizeUtil.dp2px(8f)))
+                    .into(imageView)
+            }
+        }
+        bannerView.imageList = arrayListOf(
+            "https://imagev2.xmcdn.com/group58/M02/BD/56/wKgLc1y1gE6jeL2aAAIZXzsRjZ4383.jpg",
+            "https://imagev2.xmcdn.com/group59/M09/03/98/wKgLeFysXxnShqkvAAIXR3-sGDI402.jpg",
+            "https://imagev2.xmcdn.com/group56/M08/70/24/wKgLgFyTBbnTuBaZAAIlw2Q811M585.jpg",
+            "https://imagev2.xmcdn.com/group58/M05/55/56/wKgLglywKLnzf2hcAAq_7POb1CQ160.png",
+            "https://imagev2.xmcdn.com/group57/M06/41/22/wKgLd1ydj0CC3oKrAAGHh4YsIF4869.jpg",
+            "https://imagev2.xmcdn.com/group59/M07/BD/7E/wKgLeFy1gM6Qjyv2AAG9rs-lTV0644.jpg",
+            "https://imagev2.xmcdn.com/group53/M01/98/92/wKgLcVwImsHBD5vQAAe-xf_dCis681.png",
+            "https://imagev2.xmcdn.com/group58/M0B/9D/F0/wKgLglyz7aSgk1M0AAF4LB3B8J4801.jpg",
+            "https://imagev2.xmcdn.com/group59/M06/55/62/wKgLeFywKQ3BkdxvAA-pd4FDzJU540.png",
+            "https://imagev2.xmcdn.com/group60/M0B/B0/D4/wKgLeVzBUuvjuAUaAACvtZVhMmQ766.png"
+        )
     }
 
     /**
@@ -169,11 +197,11 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        bannerView.startAutoPlay()
+        bannerViewPager.startAutoPlay()
     }
 
     override fun onPause() {
         super.onPause()
-        bannerView.stopAutoPlay()
+        bannerViewPager.stopAutoPlay()
     }
 }
