@@ -27,7 +27,7 @@ allprojects {
 
 ```
 dependencies {
-        implementation 'com.github.HaowenLee:BannerView:0.0.8'
+        implementation 'com.github.HaowenLee:BannerView:0.0.9'
 }
 
 ```
