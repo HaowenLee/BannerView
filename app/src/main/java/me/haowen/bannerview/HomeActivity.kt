@@ -144,6 +144,13 @@ class HomeActivity : AppCompatActivity() {
             "https://imagev2.xmcdn.com/group59/M06/55/62/wKgLeFywKQ3BkdxvAA-pd4FDzJU540.png",
             "https://imagev2.xmcdn.com/group60/M0B/B0/D4/wKgLeVzBUuvjuAUaAACvtZVhMmQ766.png"
         )
+
+        // 设置指示器
+        bannerView.indicatorLayout.apply {
+            selectedDrawable = resources.getDrawable(R.drawable.bg_viewpager_indicator_point_selected)
+            selectedDrawable = resources.getDrawable(R.drawable.bg_viewpager_indicator_point_unselected)
+            initIndicatorView()
+        }
     }
 
     /**

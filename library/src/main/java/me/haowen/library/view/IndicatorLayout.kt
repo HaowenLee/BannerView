@@ -67,7 +67,7 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
      */
     fun setUpWithViewPager(viewPager: ViewPager, itemCount: Int) {
         this.itemCount = itemCount
-        initView(context)
+        initIndicatorView()
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -84,7 +84,7 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         })
     }
 
-    private fun initView(context: Context) {
+    fun initIndicatorView() {
         removeAllViews()
 
         if (itemCount <= 0) {
