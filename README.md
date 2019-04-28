@@ -6,7 +6,7 @@
 
 ## 效果图
 
-<img src="https://github.com/HaowenLee/BannerView/blob/master/images/Gif_20190425_215549.gif?raw=true" width="360" alt="BannerView效果图"/>
+<img src="https://github.com/HaowenLee/BannerView/blob/master/images/banner_view.gif?raw=true" width="360" alt="BannerView效果图"/>
 
 ## 使用步骤
 
