@@ -148,7 +148,7 @@ class HomeActivity : AppCompatActivity() {
         // 设置指示器
         bannerView.indicatorLayout.apply {
             selectedDrawable = resources.getDrawable(R.drawable.bg_viewpager_indicator_point_selected)
-            selectedDrawable = resources.getDrawable(R.drawable.bg_viewpager_indicator_point_unselected)
+            unselectedDrawable = resources.getDrawable(R.drawable.bg_viewpager_indicator_point_unselected)
             initIndicatorView()
         }
     }
