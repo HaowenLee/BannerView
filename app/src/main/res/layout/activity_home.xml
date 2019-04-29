@@ -7,16 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".HomeActivity">
 
-    <ImageView
-            android:id="@+id/ivBannerBg"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:background="#CDCDCD"
-            android:src="#2F000000"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"/>
-
     <FrameLayout
             android:id="@+id/flBanner"
             android:layout_width="wrap_content"
@@ -25,6 +15,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_height="wrap_content">
 
+        <!-- ViewPager -->
         <me.haowen.library.view.BannerViewPager
                 android:id="@+id/bannerViewPager"
                 android:layout_width="match_parent"
@@ -32,6 +23,7 @@
                 tools:background="#30FFFF00"
                 android:layout_marginTop="30dp"/>
 
+        <!-- 指示器 -->
         <me.haowen.library.view.IndicatorLayout
                 android:id="@+id/indicatorLayout"
                 android:layout_width="wrap_content"
@@ -39,7 +31,7 @@
                 android:layout_gravity="bottom|center_horizontal"
                 app:selectedDrawable="@drawable/bg_viewpager_indicator_point_selected"
                 app:indicatorSize="5dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_indicator_layout"
                 app:indicatorSpace="10dp"
                 android:paddingTop="3dp"
@@ -52,6 +44,19 @@
 
     </FrameLayout>
 
+    <!-- 背景 -->
+    <ImageView
+            android:id="@+id/ivBannerBg"
+            app:layout_constraintTop_toBottomOf="@id/flBanner"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="#CDCDCD"
+            android:src="#2F000000"
+            android:layout_marginTop="30dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"/>
+
+    <!-- 轮播图控件（带普通指示器） -->
     <me.haowen.library.BannerView
             android:id="@+id/bannerView"
             android:layout_marginTop="60dp"

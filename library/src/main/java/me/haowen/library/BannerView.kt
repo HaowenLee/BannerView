@@ -10,80 +10,93 @@ import me.haowen.library.util.SizeUtil
 import me.haowen.library.view.BannerViewPager
 import me.haowen.library.view.IndicatorLayout
 
-
+/**
+ * 轮播图控件（包含，ViewPager和IndicatorLayout）
+ */
 class BannerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
-
-    /**
-     * 是否可以滑动
-     */
-    var scrollable = true
-        set(value) {
-            field = value
-            viewPager.scrollable = value
-        }
-    /**
-     * ViewPager切换的时长
-     */
-    var duration: Int = 300
-        set(value) {
-            if (field == value) {
-                return
-            }
-            field = value
-            viewPager.duration = value
-        }
-    /**
-     * 页面停留时间
-     */
-    var delayTime = 5000L
-        set(value) {
-            field = value
-            viewPager.delayTime = value
-        }
-    /**
-     * 是否自动轮播
-     */
-    var isAutoPlay: Boolean = true
-        set(value) {
-            field = value
-            viewPager.isAutoPlay = value
-        }
-    /**
-     * 图片轮播
-     */
-    var imageLoader: ImageLoader? = null
-        set(value) {
-            field = value
-            viewPager.imageLoader = value
-        }
-    /**
-     * 数据
-     */
-    var imageList: MutableList<Any> = ArrayList()
-        set(value) {
-            field = value
-            viewPager.imageList = value
-            indicatorLayout.setUpWithViewPager(viewPager, value.size)
-        }
+) : FrameLayout(context, attrs, defStyleAttr), IBannerControl {
 
     /**
      * 轮播的ViewPager
      */
-    var viewPager: BannerViewPager = BannerViewPager(context)
+    private var mViewPager: BannerViewPager = BannerViewPager(context)
+
     /**
      * 指示器
      */
     var indicatorLayout: IndicatorLayout = IndicatorLayout(context)
 
     init {
+        mViewPager.apply {
+            clipToPadding = false
+
+            setPadding(SizeUtil.dp2px(15f), 0, SizeUtil.dp2px(15f), 0)
+            pageMargin = SizeUtil.dp2px(15f)
+            offscreenPageLimit = 3
+        }
+
+        initIndicatorLayout()
+
+        // 添加 ViewPager 和 IndicatorLayout
+        addView(mViewPager)
+        addView(indicatorLayout)
+    }
+
+    /**
+     * 初始化指示器
+     */
+    private fun initIndicatorLayout() {
         indicatorLayout.unselectedDrawable = context.resources.getDrawable(R.drawable.indicator_item_unselected)
         indicatorLayout.selectedDrawable = context.resources.getDrawable(R.drawable.indicator_item_selected)
         val lp = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         lp.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        lp.bottomMargin = SizeUtil.dp2px(10f)
-        addView(viewPager)
-        addView(indicatorLayout, lp)
+        lp.bottomMargin = SizeUtil.dp2px(8f)
+        indicatorLayout.layoutParams = lp
+    }
+
+    override fun setScrollable(scrollable: Boolean) {
+        mViewPager.scrollable = scrollable
+    }
+
+    override fun setDuration(duration: Int) {
+        mViewPager.duration = duration
+    }
+
+    override fun setDelayTime(delayTime: Long) {
+        mViewPager.delayTime = delayTime
+    }
+
+    override fun setAutoPlay(autoPlay: Boolean) {
+        mViewPager.isAutoPlay = autoPlay
+    }
+
+    override fun setImageLoader(imageLoader: ImageLoader) {
+        mViewPager.imageLoader = imageLoader
+    }
+
+    override fun setImageList(imageList: MutableList<Any>) {
+        mViewPager.imageList = imageList
+        indicatorLayout.setUpWithViewPager(mViewPager, imageList.size)
+    }
+
+    override fun getImageList(): MutableList<Any> {
+        return mViewPager.imageList
+    }
+
+    override fun getViewPager(): BannerViewPager {
+        return mViewPager
+    }
+
+    override fun startAutoPlay() {
+        mViewPager.startAutoPlay()
+    }
+
+    override fun stopAutoPlay() {
+        mViewPager.stopAutoPlay()
+    }
+
+    override fun setOnItemClickedListener(listener: (Int) -> Unit) {
+        mViewPager.setOnItemClickedListener(listener)
     }
 }
