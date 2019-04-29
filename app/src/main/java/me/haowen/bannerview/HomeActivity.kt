@@ -96,8 +96,10 @@ class HomeActivity : AppCompatActivity() {
                                 val mainColor = generateColor(resource)
                                 mainColors[position] = mainColor
                                 // IDLE状态的，并且页码相同,第一次
-                                println(bannerViewPager.currentItem % mainColors.size)
-                                if (firstColor && pageState == ViewPager.SCROLL_STATE_IDLE && position == bannerViewPager.currentItem % mainColors.size) {
+                                if (firstColor && pageState == ViewPager.SCROLL_STATE_IDLE && position == bannerView.getViewPager().getRealPosition(
+                                        position
+                                    )
+                                ) {
                                     ivBannerBg.setBackgroundColor(mainColor)
                                     firstColor = false
                                 }
@@ -214,10 +216,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         bannerViewPager.startAutoPlay()
+        bannerView.startAutoPlay()
     }
 
     override fun onPause() {
         super.onPause()
         bannerViewPager.stopAutoPlay()
+        bannerView.stopAutoPlay()
     }
 }
