@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -15,17 +16,23 @@ import me.haowen.library.util.SizeUtil
 
 class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     FrameLayout(context, attrs, defStyleAttr) {
+
     /**
      * 指示器数量
      */
     private var itemCount: Int = 0
-    private var indicatorSize: Int = 0
-    private var indicatorSpace: Int = 0
     /**
      * 指示点的View
      */
-    private var indicationPointView: ImageView? = null
-
+    private lateinit var selectedItem: View
+    /**
+     * 指示器的大小
+     */
+    var indicatorSize: Int = 0
+    /**
+     * 指示器的间距
+     */
+    var indicatorSpace: Int = 0
     /**
      * 未选中的指示器图
      */
@@ -65,17 +72,23 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
      *
      * @param viewPager ViewPager
      */
-    fun setUpWithViewPager(viewPager: ViewPager, itemCount: Int) {
+    fun setUpWithViewPager(viewPager: BaseViewPager, itemCount: Int) {
         this.itemCount = itemCount
         initIndicatorView()
-
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                // indicationPointView!!.translationX = indicatorSpace * (position % itemCount + positionOffset)
+                val realIndex = viewPager.getRealPosition(position)
+                if (realIndex == itemCount - 1) {
+                    return
+                }
+                selectedItem.translationX = indicatorSpace * (realIndex + positionOffset)
             }
 
             override fun onPageSelected(position: Int) {
-                indicationPointView!!.translationX = indicatorSpace * (position % itemCount).toFloat()
+                val realIndex = viewPager.getRealPosition(position)
+                if (realIndex == 0 || realIndex == itemCount - 1) {
+                    selectedItem.translationX = (indicatorSpace * realIndex).toFloat()
+                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -91,38 +104,6 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             return
         }
 
-        addNormalIndicationView(context)
-
-        addIndicationPointView(context)
-    }
-
-    /**
-     * 创建指示点的View
-     *
-     * @param context 上下文
-     */
-    private fun addIndicationPointView(context: Context) {
-        indicationPointView = ImageView(context)
-        indicationPointView!!.scaleType = ImageView.ScaleType.FIT_XY
-        val params = LayoutParams(
-            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
-        )
-
-        params.gravity = Gravity.CENTER_VERTICAL
-
-        // 为小圆点左右添加间距
-        params.leftMargin = (indicatorSpace - indicatorSize) / 2
-        params.rightMargin = (indicatorSpace - indicatorSize) / 2
-        // 手动给小圆点一个大小
-        params.height = indicatorSize
-        params.width = indicatorSize
-
-        indicationPointView!!.setImageDrawable(selectedDrawable)
-
-        addView(indicationPointView, params)
-    }
-
-    private fun addNormalIndicationView(context: Context) {
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = LinearLayout.HORIZONTAL
         val lp = ViewGroup.LayoutParams(
@@ -133,25 +114,45 @@ class IndicatorLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         linearLayout.gravity = Gravity.CENTER_VERTICAL
 
         for (i in 0 until itemCount) {
-            val normalView = ImageView(context)
-            normalView.scaleType = ImageView.ScaleType.FIT_XY
-            val params = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            )
-
-            // 为小圆点左右添加间距
-            params.leftMargin = (indicatorSpace - indicatorSize) / 2
-            params.rightMargin = (indicatorSpace - indicatorSize) / 2
-            // 手动给小圆点一个大小
-            params.height = indicatorSize
-            params.width = indicatorSize
-
-            normalView.setImageDrawable(unselectedDrawable)
-            // 为LinearLayout添加ImageView
-            linearLayout.addView(normalView, params)
+            linearLayout.addView(getDefaultItem())
         }
+        selectedItem = getSelectedItem()
+        addView(selectedItem)
+    }
+
+    private fun getDefaultItem(): View {
+        val imageView = ImageView(context)
+        val lp = MarginLayoutParams(
+            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
+        )
+
+        lp.apply {
+            leftMargin = (indicatorSpace - indicatorSize) / 2
+            rightMargin = (indicatorSpace - indicatorSize) / 2
+            height = indicatorSize
+            width = indicatorSize
+        }
+
+        imageView.setImageDrawable(unselectedDrawable)
+        imageView.layoutParams = lp
+        return imageView
+    }
+
+    private fun getSelectedItem(): View {
+        val imageView = ImageView(context)
+        val lp = MarginLayoutParams(
+            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
+        )
+
+        lp.apply {
+            leftMargin = (indicatorSpace - indicatorSize) / 2
+            rightMargin = (indicatorSpace - indicatorSize) / 2
+            height = indicatorSize
+            width = indicatorSize
+        }
+
+        imageView.setImageDrawable(selectedDrawable)
+        imageView.layoutParams = lp
+        return imageView
     }
 }

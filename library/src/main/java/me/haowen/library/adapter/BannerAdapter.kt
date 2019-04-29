@@ -69,7 +69,7 @@ abstract class BannerAdapter<T : Any>(private val mContext: Context) : PagerAdap
      * @param position position
      * @return 真实的位置
      */
-    private fun getRealPosition(position: Int): Int {
+    fun getRealPosition(position: Int): Int {
         if (data.size == 0) {
             return 0
         }

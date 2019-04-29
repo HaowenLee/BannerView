@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
-import androidx.viewpager.widget.ViewPager
 import me.haowen.library.BannerScroller
 import me.haowen.library.WeakHandler
 import me.haowen.library.adapter.DefaultBannerAdapter
@@ -14,7 +13,7 @@ import me.haowen.library.imageloader.ImageLoader
 import me.haowen.library.util.SizeUtil
 
 
-class BannerViewPager : ViewPager {
+class BannerViewPager : BaseViewPager {
 
     /**
      * 是否可以滑动
@@ -104,6 +103,10 @@ class BannerViewPager : ViewPager {
         } else {
             false
         }
+    }
+
+    override fun getRealPosition(position: Int): Int {
+        return mAdapter.getRealPosition(position)
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
