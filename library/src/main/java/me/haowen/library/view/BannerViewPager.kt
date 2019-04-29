@@ -10,7 +10,6 @@ import me.haowen.library.BannerScroller
 import me.haowen.library.WeakHandler
 import me.haowen.library.adapter.DefaultBannerAdapter
 import me.haowen.library.imageloader.ImageLoader
-import me.haowen.library.util.SizeUtil
 
 
 class BannerViewPager : BaseViewPager {
@@ -81,14 +80,11 @@ class BannerViewPager : BaseViewPager {
 
         mAdapter = DefaultBannerAdapter(context)
 
-        clipToPadding = false
         layoutParams = LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        setPadding(SizeUtil.dp2px(15f), 0, SizeUtil.dp2px(15f), 0)
-        pageMargin = SizeUtil.dp2px(15f)
-        offscreenPageLimit = 3
+
         adapter = mAdapter
     }
 

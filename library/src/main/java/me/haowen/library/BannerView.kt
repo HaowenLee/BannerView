@@ -28,6 +28,14 @@ class BannerView @JvmOverloads constructor(
     var indicatorLayout: IndicatorLayout = IndicatorLayout(context)
 
     init {
+        mViewPager.apply {
+            clipToPadding = false
+
+            setPadding(SizeUtil.dp2px(15f), 0, SizeUtil.dp2px(15f), 0)
+            pageMargin = SizeUtil.dp2px(15f)
+            offscreenPageLimit = 3
+        }
+
         initIndicatorLayout()
 
         // 添加 ViewPager 和 IndicatorLayout
@@ -43,7 +51,7 @@ class BannerView @JvmOverloads constructor(
         indicatorLayout.selectedDrawable = context.resources.getDrawable(R.drawable.indicator_item_selected)
         val lp = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         lp.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        lp.bottomMargin = SizeUtil.dp2px(10f)
+        lp.bottomMargin = SizeUtil.dp2px(8f)
         indicatorLayout.layoutParams = lp
     }
 
